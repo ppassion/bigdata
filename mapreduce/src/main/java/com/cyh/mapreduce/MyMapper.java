@@ -1,3 +1,6 @@
+package com.cyh.mapreduce;
+
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
@@ -11,7 +14,7 @@ public class MyMapper extends Mapper {
         Text text = new Text();
         for (String word : split) {
             text.set(word);
-            context.write(text,1);
+            context.write(text,new IntWritable(1));
         }
     }
 }

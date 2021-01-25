@@ -1,3 +1,5 @@
+package com.cyh.mapreduce;
+
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 
