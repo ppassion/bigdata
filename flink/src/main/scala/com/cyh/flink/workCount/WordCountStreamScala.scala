@@ -1,3 +1,5 @@
+package com.cyh.flink.workCount
+
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
 import org.apache.flink.api.scala._
 
