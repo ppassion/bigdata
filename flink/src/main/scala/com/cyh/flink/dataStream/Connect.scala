@@ -1,4 +1,4 @@
-package com.cyh.mapreduce.flink.dataStream
+package com.cyh.flink.dataStream
 
 import org.apache.flink.streaming.api.scala.{ConnectedStreams, DataStream, StreamExecutionEnvironment}
 import org.apache.flink.api.scala._

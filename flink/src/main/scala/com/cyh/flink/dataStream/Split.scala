@@ -1,4 +1,4 @@
-package com.cyh.mapreduce.flink.dataStream
+package com.cyh.flink.dataStream
 
 import java.{lang, util}
 

@@ -1,4 +1,4 @@
-package com.cyh.mapreduce.flink.mysql
+package com.cyh.flink.mysql
 
 import java.sql.{Connection, DriverManager}
 

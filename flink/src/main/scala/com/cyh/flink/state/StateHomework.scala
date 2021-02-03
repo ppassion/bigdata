@@ -1,4 +1,4 @@
-package com.cyh.mapreduce.flink.state
+package com.cyh.flink.state
 
 import java.text.SimpleDateFormat
 import java.util.{Collections, Date}

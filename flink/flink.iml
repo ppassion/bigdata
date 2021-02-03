@@ -68,6 +68,8 @@
     <orderEntry type="library" name="Maven: org.apache.flink:flink-streaming-java_2.11:test-jar:tests:1.11.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.flink:flink-table-api-scala-bridge_2.11:1.11.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.flink:flink-table-api-scala_2.11:1.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-cep-scala_2.11:1.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.flink:flink-cep_2.11:1.11.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.11" level="project" />

@@ -1,4 +1,4 @@
-package com.cyh.mapreduce.flink.watermark
+package com.cyh.flink.watermark
 
 import org.apache.flink.api.java.tuple.Tuple
 import org.apache.flink.api.scala._

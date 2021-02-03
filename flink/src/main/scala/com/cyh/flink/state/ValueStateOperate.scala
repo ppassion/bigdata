@@ -1,4 +1,4 @@
-package com.cyh.mapreduce.flink.state
+package com.cyh.flink.state
 
 import org.apache.flink.api.common.functions.RichFlatMapFunction
 import org.apache.flink.api.common.state.{ValueState, ValueStateDescriptor}
