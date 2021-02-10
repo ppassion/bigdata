@@ -126,8 +126,6 @@ object DataProcessLaunch {
                                      queryProperties,
                                      FlinkKafkaProducer.Semantic.EXACTLY_ONCE
           ))
-
-    print("查询数据")
         queryDataStream.print("查询数据")
 
 
