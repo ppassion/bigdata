@@ -93,7 +93,7 @@ object DataProcessLaunch {
         val structureDataStream: DataStream[ProcessedData] = ruleBroadcastConnectedStream.process(new RuleBroadcastProcessFunction)
 
 
-//    //todo: 11、数据推送到kafka中
+//      //todo: 11、数据推送到kafka中
 //      //todo: 11.1 推送query查询数据准备
         val queryDataStream: DataStream[String] = structureDataStream.filter(message => {
            message.requestType.behaviorType == BehaviorTypeEnum.Query
