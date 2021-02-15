@@ -100,6 +100,7 @@ object DataProcessLaunch {
         }).map(message => message.toKafkaString())
 //
 //      //todo: 11.2 推送book预定数据准备
+    //
            val bookDataStream: DataStream[String] = structureDataStream.filter(message => {
               message.requestType.behaviorType == BehaviorTypeEnum.Book
           }).map(message => message.toKafkaString())
