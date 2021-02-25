@@ -229,6 +229,7 @@ class MysqlRuleSource extends RichSourceFunction[util.HashMap[String,Any]]{
       filterList.+=(value)
       //添加key-value到map中，这里用得到固定的key，方便后续删除
       map.put("filterRule" , filterList)
+
     }
 
     map
@@ -290,6 +291,8 @@ class MysqlRuleSource extends RichSourceFunction[util.HashMap[String,Any]]{
 
     //返回map
     map
+
+
   }
 
 

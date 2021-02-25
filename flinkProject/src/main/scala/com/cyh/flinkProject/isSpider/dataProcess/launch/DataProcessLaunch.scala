@@ -7,7 +7,6 @@ import com.cyh.flinkProject.isSpider.common.bean.ProcessedData
 import com.cyh.flinkProject.isSpider.common.util.jedis.PropertiesUtil
 import com.cyh.flinkProject.isSpider.dataProcess.broadcast.RuleBroadcastProcessFunction
 import com.cyh.flinkProject.isSpider.dataProcess.constants.BehaviorTypeEnum
-import com.cyh.flinkProject.isSpider.dataProcess.mysqlSource.MysqlRuleSource
 import org.apache.flink.api.common.state.MapStateDescriptor
 import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.CheckpointingMode
@@ -66,14 +65,24 @@ object DataProcessLaunch {
 
     //todo: 4、添加source数据源    lua----->kafka----->flink-----》print
       val sourceData: DataStream[String] = env.addSource(kafkaConsumer)
-    sourceData.print()
+    //sourceData.print()
 
     //todo: 5、对数据进行处理——>链路统计功能
        //BusinessProcess.linkCount(sourceData)
 
 
     //todo: 6、flink读取从数据库中读取规则数据，数据类型HashMap[String, Any]
-        val ruleStream: DataStream[util.HashMap[String, Any]] = env.addSource(new MysqlRuleSource)
+        //val ruleStream: DataStream[util.HashMap[String, Any]] = env.addSource(new MysqlRuleSource)
+    //ruleStream.print()
+        val sourceRuleStream: DataStream[String] = env.socketTextStream("node01",9999)
+//    val myMap = util.HashMap
+//    myMap ++ ("html" -> "^.*html.*$")
+    val myMap = new java.util.HashMap[String, Any]
+    myMap.put("html","^.*html.*$")
+    val mySeq = Seq(myMap)
+    val ruleStream: DataStream[util.HashMap[String, Any]] =
+      env.fromCollection(mySeq)
+    ruleStream.print()
 
     //todo：7、创建MapStateDescriptor
       //MapStateDescriptor定义了状态的名称、Key和Value的类型。
@@ -85,13 +94,16 @@ object DataProcessLaunch {
         val ruleBroadcastStream: BroadcastStream[util.HashMap[String, Any]] = ruleStream.broadcast(mapStateDesc)
 
 
+
+
     //todo: 9、事件流和广播的配置流连接，形成BroadcastConnectedStream
         val ruleBroadcastConnectedStream: BroadcastConnectedStream[String, util.HashMap[String, Any]] = sourceData.connect(ruleBroadcastStream)
+
 
     //todo: 10、对BroadcastConnectedStream应用process方法，根据配置(规则)处理事件
         //在其内部：实现了 数据的过滤、数据的脱敏、数据的分类、数据的解析、数据的结构化
         val structureDataStream: DataStream[ProcessedData] = ruleBroadcastConnectedStream.process(new RuleBroadcastProcessFunction)
-
+      structureDataStream.print()
 
 //      //todo: 11、数据推送到kafka中
 //      //todo: 11.1 推送query查询数据准备
@@ -100,10 +112,10 @@ object DataProcessLaunch {
         }).map(message => message.toKafkaString())
 //
 //      //todo: 11.2 推送book预定数据准备
-    //
-           val bookDataStream: DataStream[String] = structureDataStream.filter(message => {
-              message.requestType.behaviorType == BehaviorTypeEnum.Book
-          }).map(message => message.toKafkaString())
+
+//           val bookDataStream: DataStream[String] = structureDataStream.filter(message => {
+//              message.requestType.behaviorType == BehaviorTypeEnum.Book
+//          }).map(message => message.toKafkaString())
 
 
 //      //todo: 11.3 查询数据写入kafka
@@ -127,23 +139,24 @@ object DataProcessLaunch {
                                      queryProperties,
                                      FlinkKafkaProducer.Semantic.EXACTLY_ONCE
           ))
+        queryDataStream.print()
         queryDataStream.print("查询数据")
 
 
      //todo: 11.4 预定数据写入kafka
-      val bookProperties = new Properties()
-//      //topic名称
-        val bookTopicName: String = PropertiesUtil.getStringByKey("target.book.topic","kafkaConfig.properties")
-
-        bookProperties.setProperty("bootstrap.servers", kafkaServers)
-
-       //添加到sink
-        bookDataStream.addSink(new FlinkKafkaProducer[String](
-                                      bookTopicName,
-                                      new CustomSerializationSchema(bookTopicName),
-                                      bookProperties,
-                                      FlinkKafkaProducer.Semantic.EXACTLY_ONCE
-          ))
+//      val bookProperties = new Properties()
+////      //topic名称
+//        val bookTopicName: String = PropertiesUtil.getStringByKey("target.book.topic","kafkaConfig.properties")
+//
+//        bookProperties.setProperty("bootstrap.servers", kafkaServers)
+//
+//       //添加到sink
+//        bookDataStream.addSink(new FlinkKafkaProducer[String](
+//                                      bookTopicName,
+//                                      new CustomSerializationSchema(bookTopicName),
+//                                      bookProperties,
+//                                      FlinkKafkaProducer.Semantic.EXACTLY_ONCE
+//          ))
 
 
 
