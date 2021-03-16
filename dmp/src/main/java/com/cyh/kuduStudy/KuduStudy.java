@@ -20,7 +20,7 @@ public class KuduStudy {
     @Before
     public void init() {
         //指定master地址
-        String masterAddress = "192.168.52.100,192.168.52.101,192.168.52.102";
+        String masterAddress = "192.168.52.200,192.168.52.210,192.168.52.220";
         //创建kudu的数据库连接
         kuduClient = new KuduClient.KuduClientBuilder(masterAddress).defaultSocketReadTimeoutMs(6000).build();
     }
